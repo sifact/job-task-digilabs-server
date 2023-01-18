@@ -28,7 +28,7 @@ async function run() {
             .collection("update-data");
 
         // update header
-        app.put("/update2", async (req, res) => {
+        app.put("/update", async (req, res) => {
             const updateData = req.body;
             console.log(updateData);
             const id = "63c6f178aac2ec9a08633bb9";
@@ -55,10 +55,10 @@ async function run() {
             res.send(result);
         });
 
-        // update log
+        // update logo
         app.put("/updateLogo", async (req, res) => {
             const updateLogo = req.body;
-
+            console.log(updateLogo);
             const id = "63c6f178aac2ec9a08633bb9";
 
             const filter = { _id: ObjectId(id) };
@@ -67,6 +67,29 @@ async function run() {
             const newData = {
                 $set: {
                     logo: updateLogo.logo,
+                },
+            };
+            const result = await updateDataCollections.updateOne(
+                filter,
+                newData,
+                options
+            );
+            res.send(result);
+        });
+
+        // update count
+        app.put("/updateCount", async (req, res) => {
+            const updateCount = req.body;
+            console.log(updateCount);
+
+            const id = "63c6f178aac2ec9a08633bb9";
+
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+
+            const newData = {
+                $set: {
+                    count: updateCount.count,
                 },
             };
             const result = await updateDataCollections.updateOne(
